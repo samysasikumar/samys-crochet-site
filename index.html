@@ -5,45 +5,107 @@
     <style>
         body {
             font-family: Arial;
-            text-align: center;
+            margin: 0;
             background-color: #fdf6f0;
+            text-align: center;
         }
+
+        /* NAVBAR */
+        .navbar {
+            background-color: #e6735c;
+            padding: 15px;
+        }
+
+        .navbar a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
         h1 {
             color: #e6735c;
+            margin-top: 20px;
         }
-        .product {
-            margin: 20px;
+
+        .container {
+            padding: 20px;
         }
-        img {
+
+        .main-img {
             width: 80%;
             max-width: 600px;
             border-radius: 10px;
             margin: 20px 0;
+        }
+
+        .products {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .product {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            width: 200px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        footer {
+            margin-top: 30px;
+            padding: 20px;
+            background: #eee;
         }
     </style>
 </head>
 
 <body>
 
-    <h1>Samy's Crochet</h1>
-    <p>Handmade crochet items made with love 🧶</p>
-
-    <!-- NEW IMAGE SECTION -->
-    <h2>Our Booth Display</h2>
-    <img src="Booth.jpeg" alt="Samy's Crochet Booth">
-
-    <div class="product">
-        <h2>Bumble Bee</h2>
-        <p>Cute handmade plushie</p>
+    <!-- NAVIGATION -->
+    <div class="navbar">
+        <a href="index.html">Home</a>
+        <a href="story.html">My Story</a>
     </div>
 
-    <div class="product">
-        <h2>Mushroom Boi</h2>
-        <p>Soft and cozy crochet design</p>
+    <div class="container">
+
+        <h1>Samy's Crochet</h1>
+        <p>Handmade crochet items made with love 🧶</p>
+
+        <!-- Booth Image -->
+        <h2>Our Booth Display</h2>
+        <img src="booth.jpg" alt="Samy's Crochet Booth" class="main-img">
+
+        <!-- Products -->
+        <h2>Featured Products</h2>
+        <div class="products">
+
+            <div class="product">
+                <h3>Bumble Bee</h3>
+                <p>Cute handmade plushie</p>
+            </div>
+
+            <div class="product">
+                <h3>Mushroom Boi</h3>
+                <p>Soft and cozy crochet design</p>
+            </div>
+
+        </div>
+
     </div>
 
-    <p>Contact: samyuktha.sunshine@gmail.com</p>
+    <!-- Footer -->
+    <footer>
+        <p>Contact: samyuktha.sunshine@gmail.com</p>
+    </footer>
 
 </body>
 </html>
-
