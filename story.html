@@ -1,58 +1,331 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Story - Samy's Crochet</title>
-    <style>
-        body {
-            font-family: Arial;
-            text-align: center;
-            background-color: #fdf6f0;
-        }
-        h1 {
-            color: #e6735c;
-        }
-        img {
-            width: 250px;
-            border-radius: 50%;
-            margin: 20px 0;
-        }
-        p {
-            max-width: 600px;
-            margin: auto;
-            line-height: 1.6;
-        }
-        a {
-            display: block;
-            margin-top: 20px;
-            color: #e6735c;
-            text-decoration: none;
-            font-weight: bold;
-        }
-    </style>
-</head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Story - Samy's Crochet</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Nunito:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #1a0f2e;
+      --bg2: #221440;
+      --bg3: #2d1b55;
+      --border: rgba(255,255,255,0.08);
+      --border2: rgba(255,255,255,0.14);
+      --text: #f5eeff;
+      --muted: #a899c4;
+      --muted2: #c8b8e8;
+      --pink: #ff6eb4;
+      --purple: #c084fc;
+      --peach: #ffb085;
+      --lavender: #e0c3fc;
+    }
 
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Nunito', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    .blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.3;
+    }
+    .blob-1 { width: 550px; height: 550px; background: #7c3aed; top: -150px; left: -150px; }
+    .blob-2 { width: 450px; height: 450px; background: #db2777; bottom: -100px; right: -100px; }
+    .blob-3 { width: 300px; height: 300px; background: #f97316; top: 40%; left: 50%; transform: translate(-50%,-50%); opacity: 0.12; }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 3rem;
+      background: rgba(26, 15, 46, 0.88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      font-style: italic;
+      background: linear-gradient(135deg, var(--pink), var(--purple), var(--peach));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--pink); }
+
+    /* MAIN CONTENT */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 9rem 3rem 5rem;
+    }
+
+    /* EYEBROW */
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      animation: fadeUp 0.5s ease both;
+    }
+    .eyebrow-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+    }
+    .eyebrow-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--pink);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 3rem;
+      color: var(--text);
+      animation: fadeUp 0.5s 0.1s ease both;
+    }
+    h1 em {
+      font-style: italic;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* PROFILE PHOTO */
+    .photo-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 3rem;
+      animation: fadeUp 0.5s 0.2s ease both;
+    }
+
+    .photo-ring {
+      position: relative;
+      width: 200px;
+      height: 200px;
+    }
+
+    .photo-ring::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink), var(--purple), var(--peach));
+      z-index: 0;
+    }
+
+    .photo-ring img {
+      position: relative;
+      z-index: 1;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--bg);
+      display: block;
+    }
+
+    .sparkle {
+      position: absolute;
+      font-size: 1.2rem;
+      animation: spin 6s linear infinite;
+    }
+    .sparkle-1 { top: -8px; right: 10px; }
+    .sparkle-2 { bottom: 5px; left: -5px; animation-delay: -3s; }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(180deg) scale(1.2); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+
+    /* STORY TEXT */
+    .story {
+      animation: fadeUp 0.5s 0.3s ease both;
+    }
+
+    .story p {
+      font-size: 1rem;
+      color: var(--muted2);
+      line-height: 1.9;
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+    }
+    .story p strong { color: var(--text); font-weight: 600; }
+
+    /* QUOTE BLOCK */
+    .quote-block {
+      background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(219,39,119,0.15));
+      border: 1px solid rgba(192,132,252,0.25);
+      border-left: 3px solid var(--pink);
+      border-radius: 12px;
+      padding: 1.75rem 2rem;
+      margin: 2.5rem 0;
+      position: relative;
+    }
+    .quote-block::before {
+      content: '✦';
+      position: absolute;
+      top: -0.6rem;
+      left: 1.5rem;
+      font-size: 0.7rem;
+      color: var(--pink);
+      background: var(--bg);
+      padding: 0 0.4rem;
+    }
+    .quote-block p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--lavender) !important;
+      margin: 0 !important;
+      line-height: 1.7 !important;
+    }
+
+    /* BACK LINK */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 3rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--pink);
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      transition: gap 0.2s;
+      position: relative;
+      z-index: 2;
+      animation: fadeUp 0.5s 0.4s ease both;
+    }
+    .back-link:hover { gap: 0.8rem; }
+
+    /* FOOTER */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+    footer a { color: var(--muted2); text-decoration: none; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.78rem; }
+      .page { padding: 7rem 1.5rem 3rem; }
+    }
+  </style>
+</head>
 <body>
 
-    <h1>My Story</h1>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
 
-    <!-- Your Picture -->
-    <img src="me.jpg" alt="My Photo">
+  <nav>
+    <a href="index.html" class="nav-logo">Samy's Crochet</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="story.html" class="active">My Story</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="accolades.html">Accolades</a></li>
+    </ul>
+  </nav>
 
-    <!-- Your Story -->
-    <p>
-        Hi! I'm the creator of Samy's Crochet. I started crocheting
+  <div class="page">
+
+    <div class="eyebrow">
+      <div class="eyebrow-dot"></div>
+      <span class="eyebrow-label">About the maker</span>
+    </div>
+
+    <h1>My <em>Story</em></h1>
+
+    <!-- Photo -->
+    <div class="photo-wrap">
+      <div class="photo-ring">
+        <span class="sparkle sparkle-1">✦</span>
+        <span class="sparkle sparkle-2">✦</span>
+        <img src="me.jpg" alt="Samy's Photo" />
+      </div>
+    </div>
+
+    <!-- Story -->
+    <div class="story">
+      <p>
+        Hi! I'm the creator of <strong>Samy's Crochet</strong>. I started crocheting
         because I love creating cute and meaningful handmade items.
         What began as a hobby turned into a small business where I
         design plushies, accessories, and gifts for others to enjoy.
-    </p>
+      </p>
 
-    <p>
-        I also enjoy combining creativity with design and technology,
-        and I’m excited to keep growing my skills in both areas.
-    </p>
+      <div class="quote-block">
+        <p>What began as a hobby turned into a real business — one stitch at a time. 🧶</p>
+      </div>
 
-    <!-- Back Link -->
-    <a href="index.html">← Back to Home</a>
+      <p>
+        I also enjoy combining <strong>creativity with design and technology</strong>,
+        and I'm excited to keep growing my skills in both areas.
+        Every piece I make is handcrafted with care and a little bit of love.
+      </p>
+    </div>
+
+    <a href="index.html" class="back-link">← Back to Home</a>
+
+  </div>
+
+  <footer>
+    <p>Made with 💜 by <a href="index.html">Samy Sasikumar</a> · Redmond, WA</p>
+  </footer>
 
 </body>
 </html>
