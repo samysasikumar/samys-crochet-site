@@ -1,118 +1,418 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Samy's Crochet</title>
-    <style>
-        body {
-            font-family: Arial;
-            margin: 0;
-            background-color: #fdf6f0;
-            text-align: center;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Samy's Crochet</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Nunito:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #1a0f2e;
+      --bg2: #221440;
+      --bg3: #2d1b55;
+      --border: rgba(255,255,255,0.08);
+      --border2: rgba(255,255,255,0.14);
+      --text: #f5eeff;
+      --muted: #a899c4;
+      --muted2: #c8b8e8;
+      --pink: #ff6eb4;
+      --pink2: #ff9dcf;
+      --purple: #c084fc;
+      --purple2: #a855f7;
+      --peach: #ffb085;
+      --lavender: #e0c3fc;
+    }
 
-        /* NAVBAR */
-        .navbar {
-            background-color: #e6735c;
-            padding: 15px;
-        }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
-        .navbar a {
-            color: white;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: bold;
-        }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Nunito', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
 
-        .navbar a:hover {
-            text-decoration: underline;
-        }
+    /* Blobs */
+    .blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.3;
+    }
+    .blob-1 { width: 550px; height: 550px; background: #7c3aed; top: -150px; left: -150px; }
+    .blob-2 { width: 450px; height: 450px; background: #db2777; bottom: -100px; right: -100px; }
+    .blob-3 { width: 300px; height: 300px; background: #f97316; top: 40%; left: 50%; transform: translate(-50%,-50%); opacity: 0.12; }
 
-        h1 {
-            color: #e6735c;
-            margin-top: 20px;
-        }
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 3rem;
+      background: rgba(26, 15, 46, 0.88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
 
-        .container {
-            padding: 20px;
-        }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      font-style: italic;
+      background: linear-gradient(135deg, var(--pink), var(--purple), var(--peach));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-        .main-img {
-            width: 80%;
-            max-width: 600px;
-            border-radius: 10px;
-            margin: 20px 0;
-        }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--pink); }
 
-        .products {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
+    /* HERO */
+    .hero {
+      position: relative;
+      z-index: 1;
+      padding: 10rem 3rem 5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+    }
 
-        .product {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            width: 200px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
+    .hero-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--pink);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      animation: fadeUp 0.5s ease both;
+    }
+    .hero-tag::before, .hero-tag::after { content: '✦'; font-size: 0.55rem; }
 
-        footer {
-            margin-top: 30px;
-            padding: 20px;
-            background: #eee;
-        }
-    </style>
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 7vw, 6rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      color: var(--text);
+      animation: fadeUp 0.5s 0.1s ease both;
+    }
+    .hero h1 span {
+      font-style: italic;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: var(--peach);
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.5s 0.15s ease both;
+    }
+
+    .hero-desc {
+      font-size: 1rem;
+      color: var(--muted2);
+      max-width: 480px;
+      line-height: 1.85;
+      margin: 0 auto 3rem;
+      font-weight: 300;
+      animation: fadeUp 0.5s 0.2s ease both;
+    }
+
+    /* SECTIONS */
+    section {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 3rem;
+    }
+
+    .section-eyebrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+    .section-dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, var(--pink), var(--purple)); }
+    .section-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--pink); letter-spacing: 0.15em; text-transform: uppercase; }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2.5rem;
+      text-align: center;
+      letter-spacing: -0.01em;
+    }
+    .section-title em { font-style: italic; color: var(--purple); }
+
+    /* BOOTH IMAGE */
+    .booth-wrap {
+      position: relative;
+      display: inline-block;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(124,58,237,0.3);
+      border: 1px solid rgba(192,132,252,0.25);
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+    .booth-wrap img {
+      display: block;
+      width: 100%;
+      max-width: 640px;
+      border-radius: 20px;
+    }
+    .booth-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      background: linear-gradient(to top, rgba(26,15,46,0.4), transparent 60%);
+      pointer-events: none;
+    }
+
+    /* PRODUCTS */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .product-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .product-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      background: linear-gradient(135deg, rgba(192,132,252,0.08), rgba(255,110,180,0.08));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .product-card:hover {
+      border-color: rgba(192,132,252,0.35);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 50px rgba(124,58,237,0.2);
+    }
+    .product-card:hover::before { opacity: 1; }
+
+    .product-emoji { font-size: 3rem; margin-bottom: 1rem; display: block; }
+
+    .product-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.6rem;
+    }
+
+    .product-card p {
+      font-size: 0.88rem;
+      color: var(--muted2);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .product-tag {
+      display: inline-block;
+      margin-top: 1rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      padding: 0.3rem 0.8rem;
+      background: rgba(192,132,252,0.1);
+      border: 1px solid rgba(192,132,252,0.2);
+      border-radius: 100px;
+      color: var(--lavender);
+    }
+
+    /* FOOTER */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-style: italic;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--pink), var(--purple), var(--peach));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .footer-contact {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--muted2);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.7rem 1.5rem;
+      border: 1px solid var(--border2);
+      border-radius: 100px;
+      transition: all 0.25s;
+      margin-bottom: 1.5rem;
+    }
+    .footer-contact:hover { border-color: var(--purple); color: var(--lavender); background: rgba(192,132,252,0.08); }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.78rem; }
+      section, .hero { padding: 4rem 1.5rem; }
+      .hero { padding-top: 8rem; }
+    }
+  </style>
 </head>
-
 <body>
 
-    <!-- NAVIGATION -->
-    <div class="navbar">
-        <a href="index.html">Home</a>
-        <a href="story.html">My Story</a>
-        <a href="events.html">Events</a>
-        <a href="accolades.html">Accolades</a>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <nav>
+    <div class="nav-logo">Samy's Crochet</div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="story.html">My Story</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="accolades.html">Accolades</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-tag">Handmade with love</div>
+    <h1>Samy's <span>Crochet</span></h1>
+    <p class="hero-sub">cozy creations, one stitch at a time 🧶</p>
+    <p class="hero-desc">
+      Handmade crochet plushies and designs crafted with care.
+      Each piece is unique, soft, and made just for you.
+    </p>
+  </div>
+
+  <!-- BOOTH -->
+  <section>
+    <div class="section-eyebrow reveal">
+      <div class="section-dot"></div>
+      <span class="section-label">At the Market</span>
     </div>
+    <h2 class="section-title reveal">My Booth <em>Display</em></h2>
+    <div style="text-align:center;" class="reveal">
+      <div class="booth-wrap">
+        <img src="Booth.jpeg" alt="Samy's Crochet Booth" />
+      </div>
+    </div>
+  </section>
 
-    <div class="container">
+  <!-- PRODUCTS -->
+  <section>
+    <div class="section-eyebrow reveal">
+      <div class="section-dot"></div>
+      <span class="section-label">Shop</span>
+    </div>
+    <h2 class="section-title reveal">Featured <em>Products</em></h2>
+    <div class="products-grid">
 
-        <h1>Samy's Crochet</h1>
-        <p>Handmade crochet items made with love 🧶</p>
+      <div class="product-card reveal">
+        <span class="product-emoji">🐝</span>
+        <h3>Bumble Bee</h3>
+        <p>Cute handmade plushie — soft, sweet, and totally one-of-a-kind.</p>
+        <span class="product-tag">Handmade Plushie</span>
+      </div>
 
-        <!-- Booth Image -->
-        <h2>My Booth Display</h2>
-        <img src="Booth.jpeg" alt="Samy's Crochet Booth" class="main-img">
-
-        <!-- Products -->
-        <h2>Featured Products</h2>
-        <div class="products">
-
-            <div class="product">
-                <h3>Bumble Bee</h3>
-                <p>Cute handmade plushie</p>
-            </div>
-
-            <div class="product">
-                <h3>Mushroom Boi</h3>
-                <p>Soft and cozy crochet design</p>
-            </div>
-
-        </div>
+      <div class="product-card reveal">
+        <span class="product-emoji">🍄</span>
+        <h3>Mushroom Boi</h3>
+        <p>Soft and cozy crochet design — your new favorite little friend.</p>
+        <span class="product-tag">Crochet Design</span>
+      </div>
 
     </div>
+  </section>
 
-    <!-- Footer -->
-    <footer>
-        <p>Contact: samyuktha.sunshine@gmail.com</p>
-    </footer>
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Samy's Crochet</div>
+    <br/>
+    <a href="mailto:samyuktha.sunshine@gmail.com" class="footer-contact">
+      ✦ samyuktha.sunshine@gmail.com
+    </a>
+    <br/>
+    <p class="footer-copy">Made with 💜 by Samy Sasikumar · Redmond, WA</p>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
 
 </body>
 </html>
-
-
-
-
-
