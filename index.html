@@ -34,7 +34,6 @@
       min-height: 100vh;
     }
 
-    /* Blobs */
     .blob {
       position: fixed;
       border-radius: 50%;
@@ -47,7 +46,6 @@
     .blob-2 { width: 450px; height: 450px; background: #db2777; bottom: -100px; right: -100px; }
     .blob-3 { width: 300px; height: 300px; background: #f97316; top: 40%; left: 50%; transform: translate(-50%,-50%); opacity: 0.12; }
 
-    /* NAV */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -83,7 +81,6 @@
     .nav-links a:hover { color: var(--text); }
     .nav-links a.active { color: var(--pink); }
 
-    /* HERO */
     .hero {
       position: relative;
       z-index: 1;
@@ -145,7 +142,6 @@
       animation: fadeUp 0.5s 0.2s ease both;
     }
 
-    /* SECTIONS */
     section {
       position: relative;
       z-index: 1;
@@ -175,7 +171,6 @@
     }
     .section-title em { font-style: italic; color: var(--purple); }
 
-    /* BOOTH IMAGE */
     .booth-wrap {
       position: relative;
       display: inline-block;
@@ -203,7 +198,7 @@
     /* PRODUCTS */
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 1.5rem;
       margin-top: 1rem;
     }
@@ -212,12 +207,11 @@
       background: rgba(255,255,255,0.04);
       border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 2.5rem 2rem;
-      text-align: center;
+      overflow: hidden;
       transition: all 0.3s;
       position: relative;
-      overflow: hidden;
     }
+
     .product-card::before {
       content: '';
       position: absolute;
@@ -226,44 +220,77 @@
       background: linear-gradient(135deg, rgba(192,132,252,0.08), rgba(255,110,180,0.08));
       opacity: 0;
       transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 1;
     }
+
     .product-card:hover {
       border-color: rgba(192,132,252,0.35);
       transform: translateY(-5px);
-      box-shadow: 0 20px 50px rgba(124,58,237,0.2);
+      box-shadow: 0 20px 50px rgba(124,58,237,0.25);
     }
     .product-card:hover::before { opacity: 1; }
 
-    .product-emoji { font-size: 3rem; margin-bottom: 1rem; display: block; }
+    .product-img-wrap {
+      position: relative;
+      overflow: hidden;
+      height: 240px;
+    }
+
+    .product-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .product-card:hover .product-img-wrap img { transform: scale(1.06); }
+
+    .product-img-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 80px;
+      background: linear-gradient(to top, rgba(26,15,46,0.9), transparent);
+      pointer-events: none;
+    }
+
+    .product-body {
+      padding: 1.5rem;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
 
     .product-card h3 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       font-weight: 700;
       color: var(--text);
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.5rem;
     }
 
     .product-card p {
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       color: var(--muted2);
       line-height: 1.7;
       font-weight: 300;
+      margin-bottom: 1rem;
     }
 
     .product-tag {
       display: inline-block;
-      margin-top: 1rem;
       font-family: 'DM Mono', monospace;
-      font-size: 0.62rem;
-      padding: 0.3rem 0.8rem;
+      font-size: 0.6rem;
+      padding: 0.28rem 0.75rem;
       background: rgba(192,132,252,0.1);
       border: 1px solid rgba(192,132,252,0.2);
       border-radius: 100px;
       color: var(--lavender);
     }
 
-    /* FOOTER */
     footer {
       position: relative;
       z-index: 1;
@@ -298,16 +325,13 @@
       border-radius: 100px;
       transition: all 0.25s;
       margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 2;
     }
     .footer-contact:hover { border-color: var(--purple); color: var(--lavender); background: rgba(192,132,252,0.08); }
 
-    .footer-copy {
-      font-size: 0.78rem;
-      color: var(--muted);
-      font-weight: 300;
-    }
+    .footer-copy { font-size: 0.78rem; color: var(--muted); font-weight: 300; }
 
-    /* ANIMATIONS */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(18px); }
       to { opacity: 1; transform: translateY(0); }
@@ -321,6 +345,7 @@
       .nav-links a { font-size: 0.78rem; }
       section, .hero { padding: 4rem 1.5rem; }
       .hero { padding-top: 8rem; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -375,17 +400,47 @@
     <div class="products-grid">
 
       <div class="product-card reveal">
-        <span class="product-emoji">🐝</span>
-        <h3>Bumble Bee</h3>
-        <p>Cute handmade plushie — soft, sweet, and totally one-of-a-kind.</p>
-        <span class="product-tag">Handmade Plushie</span>
+        <div class="product-img-wrap">
+          <img src="bee.jpg" alt="Bumble Bee Plushie" />
+        </div>
+        <div class="product-body">
+          <h3>Bumble Bee</h3>
+          <p>Cute handmade plushie — soft, sweet, and totally one-of-a-kind.</p>
+          <span class="product-tag">Handmade Plushie</span>
+        </div>
       </div>
 
       <div class="product-card reveal">
-        <span class="product-emoji">🍄</span>
-        <h3>Mushroom Boi</h3>
-        <p>Soft and cozy crochet design — your new favorite little friend.</p>
-        <span class="product-tag">Crochet Design</span>
+        <div class="product-img-wrap">
+          <img src="mushroom.jpg" alt="Mushroom Boi Plushie" />
+        </div>
+        <div class="product-body">
+          <h3>Mushroom Boi</h3>
+          <p>Soft and cozy crochet design — your new favorite little friend.</p>
+          <span class="product-tag">Crochet Design</span>
+        </div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-img-wrap">
+          <img src="bear.jpg" alt="Cozy Bear Plushie" />
+        </div>
+        <div class="product-body">
+          <h3>Cozy Bear</h3>
+          <p>A snuggly pink & white bear plushie made with the softest yarn.</p>
+          <span class="product-tag">Handmade Plushie</span>
+        </div>
+      </div>
+
+      <div class="product-card reveal">
+        <div class="product-img-wrap">
+          <img src="sushicat.jpg" alt="Sushi Cat Plushie" />
+        </div>
+        <div class="product-body">
+          <h3>Sushi Cat</h3>
+          <p>Adorable sushi-inspired kitty duo — too cute to eat! 🍣</p>
+          <span class="product-tag">Crochet Design</span>
+        </div>
       </div>
 
     </div>
