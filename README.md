@@ -8,7 +8,7 @@ A handmade business website for **Samy's Crochet** — a small business selling 
 
 ## About the Project
 
-This is a fully custom multi-page website built from scratch using HTML and CSS, designed to showcase Samy's handmade crochet products, event appearances, and personal story. The site was created as part of a real-world entrepreneurship project while in 9th grade at Redmond High School.
+This is a fully custom multi-page website built from scratch using HTML and CSS, designed to showcase Samy's handmade crochet products, event appearances, and personal story. The site was created as part of a real-world entrepreneurship.
 
 The design follows a **warm & creative** aesthetic — deep purple backgrounds, soft pink and violet gradients, Playfair Display serif typography, and glassy card effects.
 
