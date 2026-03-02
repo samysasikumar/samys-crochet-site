@@ -291,46 +291,128 @@
       color: var(--lavender);
     }
 
+    /* CONTACT */
+    .contact-box {
+      background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(219,39,119,0.15));
+      border: 1px solid rgba(192,132,252,0.2);
+      border-radius: 24px;
+      padding: 3.5rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-box::before {
+      content: '✦';
+      position: absolute;
+      font-size: 10rem;
+      color: rgba(192,132,252,0.05);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      pointer-events: none;
+    }
+
+    .contact-box h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      font-weight: 700;
+      font-style: italic;
+      color: var(--text);
+      margin-bottom: 0.6rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .contact-box > p {
+      color: var(--muted2);
+      font-size: 0.88rem;
+      font-weight: 300;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 460px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+      text-align: left;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 12px;
+      padding: 0.85rem 1.2rem;
+      color: var(--text);
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    .contact-form input::placeholder,
+    .contact-form textarea::placeholder { color: var(--muted); }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus { border-color: rgba(192,132,252,0.6); }
+
+    .contact-form textarea { resize: vertical; min-height: 110px; }
+
+    .contact-form button {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      padding: 0.9rem 2rem;
+      border-radius: 100px;
+      border: none;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      color: white;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: all 0.25s;
+      align-self: center;
+    }
+    .contact-form button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(192,132,252,0.4);
+    }
+
+    /* FOOTER */
     footer {
       position: relative;
       z-index: 1;
       text-align: center;
-      padding: 3rem 2rem;
+      padding: 2.5rem 2rem;
       border-top: 1px solid var(--border);
       margin-top: 2rem;
     }
 
     .footer-logo {
       font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       font-style: italic;
       font-weight: 700;
       background: linear-gradient(135deg, var(--pink), var(--purple), var(--peach));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
     }
 
-    .footer-contact {
+    .footer-copy {
       font-family: 'DM Mono', monospace;
-      font-size: 0.78rem;
-      color: var(--muted2);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.7rem 1.5rem;
-      border: 1px solid var(--border2);
-      border-radius: 100px;
-      transition: all 0.25s;
-      margin-bottom: 1.5rem;
-      position: relative;
-      z-index: 2;
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
     }
-    .footer-contact:hover { border-color: var(--purple); color: var(--lavender); background: rgba(192,132,252,0.08); }
-
-    .footer-copy { font-size: 0.78rem; color: var(--muted); font-weight: 300; }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(18px); }
@@ -446,14 +528,41 @@
     </div>
   </section>
 
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-eyebrow reveal">
+      <div class="section-dot"></div>
+      <span class="section-label">Get in Touch</span>
+    </div>
+    <h2 class="section-title reveal">Say <em>Hello</em></h2>
+    <div class="contact-box reveal">
+      <h3>Order or Enquire</h3>
+      <p>Interested in a custom order or have a question? Send a message!</p>
+
+      <!--
+        FORMSPREE SETUP:
+        1. Go to https://formspree.io — sign up free
+        2. Create a New Form — get a URL like https://formspree.io/f/xxxxxxxx
+        3. Replace YOUR_FORM_ID below with your ID (the xxxxxxxx part)
+        You can use the SAME form ID as your portfolio so messages go to one inbox,
+        or create a separate one just for crochet orders.
+      -->
+      <form
+        action="https://formspree.io/f/YOUR_FORM_ID"
+        method="POST"
+        class="contact-form"
+      >
+        <input type="text" name="name" placeholder="Your name" required />
+        <input type="email" name="email" placeholder="Your email" required />
+        <textarea name="message" placeholder="Your message or custom order request" rows="4" required></textarea>
+        <button type="submit">Send Message →</button>
+      </form>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer>
     <div class="footer-logo">Samy's Crochet</div>
-    <br/>
-    <a href="mailto:samyuktha.sunshine@gmail.com" class="footer-contact">
-      ✦ samyuktha.sunshine@gmail.com
-    </a>
-    <br/>
     <p class="footer-copy">Made with 💜 by Samy Sasikumar · Redmond, WA</p>
   </footer>
 
