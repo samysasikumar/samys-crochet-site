@@ -55,9 +55,8 @@ The design follows a **warm & creative** aesthetic — deep purple backgrounds, 
 
 ## Author
 
-**Samy Sasikumar** · 9th Grade · Redmond High School (LWSD) · Redmond, WA
+**Samy Sasikumar** · High School Student · Redmond, WA
 
-📫 samyuktha.sunshine@gmail.com  
 🐙 [github.com/samysasikumar](https://github.com/samysasikumar)
 
 ---
