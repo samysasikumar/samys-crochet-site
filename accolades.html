@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Accolades - Samy's Crochet</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Nunito:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
-    :root {
+    /* ── DARK THEME (default) ── */
+    :root,
+    [data-theme="dark"] {
       --bg: #1a0f2e;
       --bg2: #221440;
       --bg3: #2d1b55;
@@ -19,6 +21,28 @@
       --purple: #c084fc;
       --peach: #ffb085;
       --lavender: #e0c3fc;
+      --card-bg: rgba(255,255,255,0.04);
+      --nav-bg: rgba(26,15,46,0.88);
+      --blob-opacity: 0.3;
+    }
+
+    /* ── LIGHT THEME ── */
+    [data-theme="light"] {
+      --bg: #faf7ff;
+      --bg2: #f0ebff;
+      --bg3: #e8e0ff;
+      --border: rgba(0,0,0,0.08);
+      --border2: rgba(0,0,0,0.12);
+      --text: #1a0f2e;
+      --muted: #6b5b8a;
+      --muted2: #4a3870;
+      --pink: #e0448a;
+      --purple: #7c3aed;
+      --peach: #c05c20;
+      --lavender: #4a2a8a;
+      --card-bg: rgba(255,255,255,0.85);
+      --nav-bg: rgba(250,247,255,0.92);
+      --blob-opacity: 0.1;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -30,6 +54,7 @@
       font-family: 'Nunito', sans-serif;
       overflow-x: hidden;
       min-height: 100vh;
+      transition: background 0.35s ease, color 0.35s ease;
     }
 
     .blob {
@@ -38,13 +63,14 @@
       filter: blur(100px);
       pointer-events: none;
       z-index: 0;
-      opacity: 0.3;
+      opacity: var(--blob-opacity);
+      transition: opacity 0.35s ease;
     }
     .blob-1 { width: 550px; height: 550px; background: #7c3aed; top: -150px; left: -150px; }
     .blob-2 { width: 450px; height: 450px; background: #db2777; bottom: -100px; right: -100px; }
-    .blob-3 { width: 300px; height: 300px; background: #f97316; top: 40%; left: 50%; transform: translate(-50%,-50%); opacity: 0.12; }
+    .blob-3 { width: 300px; height: 300px; background: #f97316; top: 40%; left: 50%; transform: translate(-50%,-50%); opacity: calc(var(--blob-opacity) * 0.4); }
 
-    /* NAV */
+    /* ── NAV ── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -53,9 +79,10 @@
       justify-content: space-between;
       align-items: center;
       padding: 1.25rem 3rem;
-      background: rgba(26, 15, 46, 0.88);
+      background: var(--nav-bg);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
+      transition: background 0.35s ease;
     }
 
     .nav-logo {
@@ -70,7 +97,7 @@
       text-decoration: none;
     }
 
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; align-items: center; }
     .nav-links a {
       color: var(--muted);
       text-decoration: none;
@@ -81,7 +108,28 @@
     .nav-links a:hover { color: var(--text); }
     .nav-links a.active { color: var(--pink); }
 
-    /* PAGE */
+    /* ── THEME TOGGLE ── */
+    .theme-toggle {
+      background: var(--card-bg);
+      border: 1px solid var(--border2);
+      border-radius: 100px;
+      padding: 0.35rem 0.75rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      transition: all 0.25s;
+      white-space: nowrap;
+    }
+    .theme-toggle:hover { border-color: rgba(192,132,252,0.4); color: var(--text); }
+    .theme-toggle .toggle-icon { font-size: 0.85rem; transition: transform 0.3s; }
+    .theme-toggle:hover .toggle-icon { transform: rotate(20deg); }
+
+    /* ── PAGE ── */
     .page {
       position: relative;
       z-index: 1;
@@ -97,18 +145,8 @@
       margin-bottom: 0.75rem;
       animation: fadeUp 0.5s ease both;
     }
-    .eyebrow-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--pink), var(--purple));
-    }
-    .eyebrow-label {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--pink);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
+    .eyebrow-dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, var(--pink), var(--purple)); }
+    .eyebrow-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--pink); letter-spacing: 0.15em; text-transform: uppercase; }
 
     h1 {
       font-family: 'Playfair Display', serif;
@@ -138,7 +176,7 @@
       animation: fadeUp 0.5s 0.15s ease both;
     }
 
-    /* CARDS GRID */
+    /* ── CARDS ── */
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -147,7 +185,7 @@
     }
 
     .card {
-      background: rgba(255,255,255,0.04);
+      background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 20px;
       padding: 2.5rem 2rem;
@@ -156,7 +194,6 @@
       position: relative;
       overflow: hidden;
     }
-
     .card::before {
       content: '';
       position: absolute;
@@ -168,52 +205,14 @@
       pointer-events: none;
       z-index: 1;
     }
-
-    .card:hover {
-      border-color: rgba(192,132,252,0.35);
-      transform: translateY(-5px);
-      box-shadow: 0 20px 50px rgba(124,58,237,0.2);
-    }
+    .card:hover { border-color: rgba(192,132,252,0.35); transform: translateY(-5px); box-shadow: 0 20px 50px rgba(124,58,237,0.2); }
     .card:hover::before { opacity: 1; }
 
-    .card-icon {
-      font-size: 3rem;
-      margin-bottom: 1.25rem;
-      display: block;
-      position: relative;
-      z-index: 2;
-    }
-
-    .card-body {
-      position: relative;
-      z-index: 2;
-    }
-
-    .card-year {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.62rem;
-      color: var(--pink);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-    }
-
-    .card-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1.3;
-      margin-bottom: 0.6rem;
-    }
-
-    .card-desc {
-      font-size: 0.85rem;
-      color: var(--muted2);
-      line-height: 1.7;
-      font-weight: 300;
-    }
-
+    .card-icon { font-size: 3rem; margin-bottom: 1.25rem; display: block; position: relative; z-index: 2; }
+    .card-body { position: relative; z-index: 2; }
+    .card-year { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--pink); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .card-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 0.6rem; }
+    .card-desc { font-size: 0.85rem; color: var(--muted2); line-height: 1.7; font-weight: 300; }
     .card-tag {
       display: inline-block;
       margin-top: 1rem;
@@ -226,7 +225,7 @@
       color: var(--lavender);
     }
 
-    /* FOOTER */
+    /* ── FOOTER ── */
     footer {
       position: relative;
       z-index: 1;
@@ -241,14 +240,11 @@
     }
     footer a { color: var(--muted2); text-decoration: none; }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; }
-      .nav-links { gap: 1rem; }
+      .nav-links { gap: 0.75rem; }
       .nav-links a { font-size: 0.78rem; }
       .page { padding: 7rem 1.5rem 3rem; }
       .gallery { grid-template-columns: 1fr; }
@@ -268,6 +264,12 @@
       <li><a href="story.html">My Story</a></li>
       <li><a href="events.html">Events</a></li>
       <li><a href="accolades.html" class="active">Accolades</a></li>
+      <li>
+        <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">
+          <span class="toggle-icon">☀️</span>
+          <span id="theme-label">Light</span>
+        </button>
+      </li>
     </ul>
   </nav>
 
@@ -323,7 +325,32 @@
     </p>
   </footer>
 
+  <script>
+    const root = document.documentElement;
+    const themeBtn = document.getElementById('theme-btn');
+    const themeLabel = document.getElementById('theme-label');
+
+    // Same localStorage key as crochet site — preference syncs across all pages
+    const saved = localStorage.getItem('samy-crochet-theme') || 'dark';
+    applyTheme(saved);
+
+    function applyTheme(theme) {
+      root.setAttribute('data-theme', theme);
+      if (theme === 'light') {
+        themeBtn.querySelector('.toggle-icon').textContent = '🌙';
+        themeLabel.textContent = 'Dark';
+      } else {
+        themeBtn.querySelector('.toggle-icon').textContent = '☀️';
+        themeLabel.textContent = 'Light';
+      }
+      localStorage.setItem('samy-crochet-theme', theme);
+    }
+
+    function toggleTheme() {
+      const current = root.getAttribute('data-theme');
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    }
+  </script>
+
 </body>
 </html>
-
-
