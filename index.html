@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Samy's Crochet</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Nunito:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
-    :root {
+    /* ── DARK THEME (default) ── */
+    :root,
+    [data-theme="dark"] {
       --bg: #1a0f2e;
       --bg2: #221440;
       --bg3: #2d1b55;
@@ -21,6 +23,42 @@
       --purple2: #a855f7;
       --peach: #ffb085;
       --lavender: #e0c3fc;
+      --card-bg: rgba(255,255,255,0.04);
+      --nav-bg: rgba(26,15,46,0.88);
+      --blob-opacity: 0.3;
+      --input-bg: rgba(255,255,255,0.06);
+      --input-border: rgba(255,255,255,0.14);
+      --product-gradient: rgba(26,15,46,0.9);
+      --chat-bg: rgba(34,20,64,0.97);
+      --chat-msg-bg: rgba(255,255,255,0.07);
+      --chat-typing-bg: rgba(255,255,255,0.05);
+    }
+
+    /* ── LIGHT THEME ── */
+    [data-theme="light"] {
+      --bg: #faf7ff;
+      --bg2: #f0ebff;
+      --bg3: #e8e0ff;
+      --border: rgba(0,0,0,0.08);
+      --border2: rgba(0,0,0,0.12);
+      --text: #1a0f2e;
+      --muted: #6b5b8a;
+      --muted2: #4a3870;
+      --pink: #e0448a;
+      --pink2: #c4276d;
+      --purple: #7c3aed;
+      --purple2: #6d28d9;
+      --peach: #c05c20;
+      --lavender: #4a2a8a;
+      --card-bg: rgba(255,255,255,0.85);
+      --nav-bg: rgba(250,247,255,0.92);
+      --blob-opacity: 0.1;
+      --input-bg: rgba(255,255,255,0.9);
+      --input-border: rgba(0,0,0,0.12);
+      --product-gradient: rgba(250,247,255,0.85);
+      --chat-bg: rgba(240,235,255,0.98);
+      --chat-msg-bg: rgba(0,0,0,0.05);
+      --chat-typing-bg: rgba(0,0,0,0.04);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -32,20 +70,24 @@
       font-family: 'Nunito', sans-serif;
       overflow-x: hidden;
       min-height: 100vh;
+      transition: background 0.35s ease, color 0.35s ease;
     }
 
+    /* ── BLOBS ── */
     .blob {
       position: fixed;
       border-radius: 50%;
       filter: blur(100px);
       pointer-events: none;
       z-index: 0;
-      opacity: 0.3;
+      opacity: var(--blob-opacity);
+      transition: opacity 0.35s ease;
     }
     .blob-1 { width: 550px; height: 550px; background: #7c3aed; top: -150px; left: -150px; }
     .blob-2 { width: 450px; height: 450px; background: #db2777; bottom: -100px; right: -100px; }
-    .blob-3 { width: 300px; height: 300px; background: #f97316; top: 40%; left: 50%; transform: translate(-50%,-50%); opacity: 0.12; }
+    .blob-3 { width: 300px; height: 300px; background: #f97316; top: 40%; left: 50%; transform: translate(-50%,-50%); opacity: calc(var(--blob-opacity) * 0.4); }
 
+    /* ── NAV ── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -54,9 +96,10 @@
       justify-content: space-between;
       align-items: center;
       padding: 1.25rem 3rem;
-      background: rgba(26, 15, 46, 0.88);
+      background: var(--nav-bg);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
+      transition: background 0.35s ease;
     }
 
     .nav-logo {
@@ -70,7 +113,7 @@
       background-clip: text;
     }
 
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; align-items: center; }
     .nav-links a {
       color: var(--muted);
       text-decoration: none;
@@ -81,6 +124,28 @@
     .nav-links a:hover { color: var(--text); }
     .nav-links a.active { color: var(--pink); }
 
+    /* ── THEME TOGGLE ── */
+    .theme-toggle {
+      background: var(--card-bg);
+      border: 1px solid var(--border2);
+      border-radius: 100px;
+      padding: 0.35rem 0.75rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      transition: all 0.25s;
+      white-space: nowrap;
+    }
+    .theme-toggle:hover { border-color: rgba(192,132,252,0.4); color: var(--text); }
+    .theme-toggle .toggle-icon { font-size: 0.85rem; transition: transform 0.3s; }
+    .theme-toggle:hover .toggle-icon { transform: rotate(20deg); }
+
+    /* ── HERO ── */
     .hero {
       position: relative;
       z-index: 1;
@@ -142,6 +207,7 @@
       animation: fadeUp 0.5s 0.2s ease both;
     }
 
+    /* ── SECTIONS ── */
     section {
       position: relative;
       z-index: 1;
@@ -150,13 +216,7 @@
       padding: 4rem 3rem;
     }
 
-    .section-eyebrow {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
-      margin-bottom: 0.75rem;
-    }
+    .section-eyebrow { display: flex; align-items: center; justify-content: center; gap: 0.75rem; margin-bottom: 0.75rem; }
     .section-dot { width: 8px; height: 8px; border-radius: 50%; background: linear-gradient(135deg, var(--pink), var(--purple)); }
     .section-label { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--pink); letter-spacing: 0.15em; text-transform: uppercase; }
 
@@ -171,6 +231,7 @@
     }
     .section-title em { font-style: italic; color: var(--purple); }
 
+    /* ── BOOTH ── */
     .booth-wrap {
       position: relative;
       display: inline-block;
@@ -180,12 +241,7 @@
       border: 1px solid rgba(192,132,252,0.25);
       animation: fadeUp 0.6s 0.3s ease both;
     }
-    .booth-wrap img {
-      display: block;
-      width: 100%;
-      max-width: 640px;
-      border-radius: 20px;
-    }
+    .booth-wrap img { display: block; width: 100%; max-width: 640px; border-radius: 20px; }
     .booth-wrap::after {
       content: '';
       position: absolute;
@@ -195,6 +251,7 @@
       pointer-events: none;
     }
 
+    /* ── PRODUCTS ── */
     .products-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -203,14 +260,13 @@
     }
 
     .product-card {
-      background: rgba(255,255,255,0.04);
+      background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: 20px;
       overflow: hidden;
       transition: all 0.3s;
       position: relative;
     }
-
     .product-card::before {
       content: '';
       position: absolute;
@@ -222,63 +278,24 @@
       pointer-events: none;
       z-index: 1;
     }
-
-    .product-card:hover {
-      border-color: rgba(192,132,252,0.35);
-      transform: translateY(-5px);
-      box-shadow: 0 20px 50px rgba(124,58,237,0.25);
-    }
+    .product-card:hover { border-color: rgba(192,132,252,0.35); transform: translateY(-5px); box-shadow: 0 20px 50px rgba(124,58,237,0.25); }
     .product-card:hover::before { opacity: 1; }
 
-    .product-img-wrap {
-      position: relative;
-      overflow: hidden;
-      height: 240px;
-    }
-
-    .product-img-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-      transition: transform 0.4s ease;
-    }
-
+    .product-img-wrap { position: relative; overflow: hidden; height: 240px; }
+    .product-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; transition: transform 0.4s ease; }
     .product-card:hover .product-img-wrap img { transform: scale(1.06); }
-
     .product-img-wrap::after {
       content: '';
       position: absolute;
       bottom: 0; left: 0; right: 0;
       height: 80px;
-      background: linear-gradient(to top, rgba(26,15,46,0.9), transparent);
+      background: linear-gradient(to top, var(--product-gradient), transparent);
       pointer-events: none;
     }
 
-    .product-body {
-      padding: 1.5rem;
-      position: relative;
-      z-index: 2;
-      text-align: center;
-    }
-
-    .product-card h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 0.5rem;
-    }
-
-    .product-card p {
-      font-size: 0.85rem;
-      color: var(--muted2);
-      line-height: 1.7;
-      font-weight: 300;
-      margin-bottom: 1rem;
-    }
-
+    .product-body { padding: 1.5rem; position: relative; z-index: 2; text-align: center; }
+    .product-card h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+    .product-card p { font-size: 0.85rem; color: var(--muted2); line-height: 1.7; font-weight: 300; margin-bottom: 1rem; }
     .product-tag {
       display: inline-block;
       font-family: 'DM Mono', monospace;
@@ -290,6 +307,7 @@
       color: var(--lavender);
     }
 
+    /* ── CONTACT ── */
     .contact-box {
       background: linear-gradient(135deg, rgba(124,58,237,0.2), rgba(219,39,119,0.15));
       border: 1px solid rgba(192,132,252,0.2);
@@ -299,71 +317,37 @@
       position: relative;
       overflow: hidden;
     }
-
     .contact-box::before {
       content: '✦';
       position: absolute;
       font-size: 10rem;
       color: rgba(192,132,252,0.05);
-      top: 50%;
-      left: 50%;
+      top: 50%; left: 50%;
       transform: translate(-50%,-50%);
       pointer-events: none;
     }
+    .contact-box h3 { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem,3vw,2.2rem); font-weight: 700; font-style: italic; color: var(--text); margin-bottom: 0.6rem; position: relative; z-index: 2; }
+    .contact-box > p { color: var(--muted2); font-size: 0.88rem; font-weight: 300; margin-bottom: 2rem; position: relative; z-index: 2; }
 
-    .contact-box h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.5rem, 3vw, 2.2rem);
-      font-weight: 700;
-      font-style: italic;
-      color: var(--text);
-      margin-bottom: 0.6rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    .contact-box > p {
-      color: var(--muted2);
-      font-size: 0.88rem;
-      font-weight: 300;
-      margin-bottom: 2rem;
-      position: relative;
-      z-index: 2;
-    }
-
-    .contact-form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      max-width: 460px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 2;
-      text-align: left;
-    }
-
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; max-width: 460px; margin: 0 auto; position: relative; z-index: 2; text-align: left; }
     .contact-form input,
     .contact-form textarea {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.14);
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
       border-radius: 12px;
       padding: 0.85rem 1.2rem;
       color: var(--text);
       font-family: 'Nunito', sans-serif;
       font-size: 0.9rem;
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, background 0.35s;
       width: 100%;
     }
-
     .contact-form input::placeholder,
     .contact-form textarea::placeholder { color: var(--muted); }
-
     .contact-form input:focus,
     .contact-form textarea:focus { border-color: rgba(192,132,252,0.6); }
-
     .contact-form textarea { resize: vertical; min-height: 110px; }
-
     .contact-form button {
       font-family: 'DM Mono', monospace;
       font-size: 0.75rem;
@@ -378,49 +362,16 @@
       transition: all 0.25s;
       align-self: center;
     }
-    .contact-form button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(192,132,252,0.4);
-    }
-    .contact-form button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
-    }
+    .contact-form button:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(192,132,252,0.4); }
+    .contact-form button:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-    .success-msg {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 2rem;
-      position: relative;
-      z-index: 2;
-    }
+    .success-msg { display: none; flex-direction: column; align-items: center; gap: 0.75rem; padding: 2rem; position: relative; z-index: 2; }
     .success-msg .success-icon { font-size: 2.5rem; }
-    .success-msg p {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-size: 1.1rem;
-      color: var(--lavender);
-      margin: 0;
-    }
-    .success-msg small {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--muted);
-      letter-spacing: 0.06em;
-    }
+    .success-msg p { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.1rem; color: var(--lavender); margin: 0; }
+    .success-msg small { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); letter-spacing: 0.06em; }
 
-    footer {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      padding: 2.5rem 2rem;
-      border-top: 1px solid var(--border);
-      margin-top: 2rem;
-    }
-
+    /* ── FOOTER ── */
+    footer { position: relative; z-index: 1; text-align: center; padding: 2.5rem 2rem; border-top: 1px solid var(--border); margin-top: 2rem; }
     .footer-logo {
       font-family: 'Playfair Display', serif;
       font-size: 1.4rem;
@@ -432,13 +383,7 @@
       background-clip: text;
       margin-bottom: 0.75rem;
     }
-
-    .footer-copy {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--muted);
-      letter-spacing: 0.06em;
-    }
+    .footer-copy { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); letter-spacing: 0.06em; }
 
     /* ── CHAT WIDGET ── */
     #chat-toggle {
@@ -454,31 +399,24 @@
       transition: transform 0.2s, box-shadow 0.2s;
       display: flex; align-items: center; justify-content: center;
     }
-    #chat-toggle:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 28px rgba(192,132,252,0.75);
-    }
+    #chat-toggle:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(192,132,252,0.75); }
 
     #chat-box {
       position: fixed;
       bottom: 5rem; right: 1.5rem;
       z-index: 200;
       width: 320px; height: 460px;
-      background: rgba(34,20,64,0.97);
+      background: var(--chat-bg);
       backdrop-filter: blur(20px);
       border-radius: 20px;
       border: 1px solid rgba(192,132,252,0.25);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
       display: flex; flex-direction: column;
       overflow: hidden;
       transition: all 0.25s;
       transform-origin: bottom right;
     }
-    #chat-box.hidden {
-      transform: scale(0.85);
-      opacity: 0;
-      pointer-events: none;
-    }
+    #chat-box.hidden { transform: scale(0.85); opacity: 0; pointer-events: none; }
 
     .chat-header {
       background: linear-gradient(135deg, rgba(124,58,237,0.5), rgba(219,39,119,0.35));
@@ -486,84 +424,25 @@
       padding: 0.9rem 1rem;
       display: flex; align-items: center; gap: 0.65rem;
     }
-    .chat-header-avatar {
-      width: 32px; height: 32px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--pink), var(--purple));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1rem; flex-shrink: 0;
-    }
+    .chat-header-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--pink), var(--purple)); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
     .chat-header-text { flex: 1; }
-    .chat-header-text strong {
-      font-family: 'Playfair Display', serif;
-      font-size: 0.92rem; font-style: italic;
-      color: var(--text); display: block;
-    }
-    .chat-header-text small {
-      font-size: 0.6rem; color: var(--muted2);
-      font-family: 'DM Mono', monospace;
-    }
-    .chat-online {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: #74c69d;
-      box-shadow: 0 0 6px #74c69d;
-      flex-shrink: 0;
-    }
-    .chat-close {
-      background: none; border: none;
-      color: var(--muted); cursor: pointer;
-      font-size: 1rem; padding: 0.2rem;
-      transition: color 0.2s;
-    }
-    .chat-close:hover { color: var(--text); }
+    .chat-header-text strong { font-family: 'Playfair Display', serif; font-size: 0.92rem; font-style: italic; color: #f5eeff; display: block; }
+    .chat-header-text small { font-size: 0.6rem; color: rgba(255,255,255,0.65); font-family: 'DM Mono', monospace; }
+    .chat-online { width: 7px; height: 7px; border-radius: 50%; background: #74c69d; box-shadow: 0 0 6px #74c69d; flex-shrink: 0; }
+    .chat-close { background: none; border: none; color: rgba(255,255,255,0.6); cursor: pointer; font-size: 1rem; padding: 0.2rem; transition: color 0.2s; }
+    .chat-close:hover { color: #fff; }
 
-    .chat-messages {
-      flex: 1; overflow-y: auto;
-      padding: 1rem;
-      display: flex; flex-direction: column; gap: 0.65rem;
-    }
+    .chat-messages { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 0.65rem; }
     .chat-messages::-webkit-scrollbar { width: 3px; }
-    .chat-messages::-webkit-scrollbar-thumb {
-      background: rgba(192,132,252,0.3); border-radius: 2px;
-    }
+    .chat-messages::-webkit-scrollbar-thumb { background: rgba(192,132,252,0.3); border-radius: 2px; }
 
-    .msg {
-      max-width: 86%;
-      padding: 0.65rem 0.9rem;
-      border-radius: 14px;
-      font-size: 0.82rem;
-      line-height: 1.55;
-      animation: msgIn 0.2s ease;
-    }
-    @keyframes msgIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .msg-bot {
-      background: rgba(255,255,255,0.07);
-      color: var(--muted2);
-      align-self: flex-start;
-      border-bottom-left-radius: 4px;
-      border: 1px solid var(--border);
-    }
-    .msg-user {
-      background: linear-gradient(135deg, var(--pink), var(--purple));
-      color: white;
-      align-self: flex-end;
-      border-bottom-right-radius: 4px;
-    }
-    .msg-typing {
-      background: rgba(255,255,255,0.05);
-      color: var(--muted);
-      align-self: flex-start;
-      border-bottom-left-radius: 4px;
-      font-style: italic; font-size: 0.78rem;
-      border: 1px solid var(--border);
-    }
+    .msg { max-width: 86%; padding: 0.65rem 0.9rem; border-radius: 14px; font-size: 0.82rem; line-height: 1.55; animation: msgIn 0.2s ease; }
+    @keyframes msgIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    .msg-bot { background: var(--chat-msg-bg); color: var(--muted2); align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid var(--border); }
+    .msg-user { background: linear-gradient(135deg, var(--pink), var(--purple)); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+    .msg-typing { background: var(--chat-typing-bg); color: var(--muted); align-self: flex-start; border-bottom-left-radius: 4px; font-style: italic; font-size: 0.78rem; border: 1px solid var(--border); }
 
-    .chat-suggestions {
-      display: flex; flex-wrap: wrap; gap: 0.4rem;
-      padding: 0 1rem 0.75rem;
-    }
+    .chat-suggestions { display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0 1rem 0.75rem; }
     .suggestion {
       font-family: 'DM Mono', monospace;
       font-size: 0.6rem;
@@ -576,46 +455,30 @@
       transition: all 0.2s;
       white-space: nowrap;
     }
-    .suggestion:hover {
-      background: rgba(192,132,252,0.2);
-      border-color: rgba(192,132,252,0.5);
-    }
+    .suggestion:hover { background: rgba(192,132,252,0.2); border-color: rgba(192,132,252,0.5); }
 
-    .chat-input-row {
-      display: flex; gap: 0.5rem;
-      padding: 0.75rem;
-      border-top: 1px solid var(--border);
-    }
+    .chat-input-row { display: flex; gap: 0.5rem; padding: 0.75rem; border-top: 1px solid var(--border); }
     .chat-input-row input {
       flex: 1; border-radius: 100px;
       padding: 0.5rem 0.9rem; font-size: 0.82rem;
-      background: rgba(255,255,255,0.06);
+      background: var(--input-bg);
       border: 1px solid var(--border2);
       color: var(--text);
       font-family: 'Nunito', sans-serif;
-      outline: none; transition: border-color 0.2s;
+      outline: none; transition: border-color 0.2s, background 0.35s;
     }
     .chat-input-row input::placeholder { color: var(--muted); }
     .chat-input-row input:focus { border-color: rgba(192,132,252,0.5); }
-    .chat-send {
-      background: linear-gradient(135deg, var(--pink), var(--purple));
-      color: white; border: none; border-radius: 100px;
-      padding: 0.5rem 0.85rem; cursor: pointer;
-      font-size: 0.85rem; transition: transform 0.2s;
-      flex-shrink: 0;
-    }
+    .chat-send { background: linear-gradient(135deg, var(--pink), var(--purple)); color: white; border: none; border-radius: 100px; padding: 0.5rem 0.85rem; cursor: pointer; font-size: 0.85rem; transition: transform 0.2s; flex-shrink: 0; }
     .chat-send:hover { transform: scale(1.08); }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
     .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
     @media (max-width: 768px) {
       nav { padding: 1rem 1.5rem; }
-      .nav-links { gap: 1rem; }
+      .nav-links { gap: 0.75rem; }
       .nav-links a { font-size: 0.78rem; }
       section, .hero { padding: 4rem 1.5rem; }
       .hero { padding-top: 8rem; }
@@ -637,6 +500,12 @@
       <li><a href="story.html">My Story</a></li>
       <li><a href="events.html">Events</a></li>
       <li><a href="accolades.html">Accolades</a></li>
+      <li>
+        <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">
+          <span class="toggle-icon">☀️</span>
+          <span id="theme-label">Light</span>
+        </button>
+      </li>
     </ul>
   </nav>
 
@@ -731,14 +600,12 @@
     <div class="contact-box reveal">
       <h3>Order or Enquire</h3>
       <p>Interested in a custom order or have a question? Send a message!</p>
-
       <form id="contact-form" class="contact-form">
         <input type="text" name="name" placeholder="Your name" required />
         <input type="email" name="email" placeholder="Your email" required />
         <textarea name="message" placeholder="Your message or custom order request" rows="4" required></textarea>
         <button type="submit" id="submit-btn">Send Message →</button>
       </form>
-
       <div class="success-msg" id="success-msg">
         <span class="success-icon">🧶</span>
         <p>Message sent! I'll get back to you soon.</p>
@@ -753,7 +620,7 @@
     <p class="footer-copy">Made with 💜 by Samy Sasikumar</p>
   </footer>
 
-  <!-- ── CHAT WIDGET ── -->
+  <!-- CHAT WIDGET -->
   <button id="chat-toggle" aria-label="Open chat">🧶</button>
 
   <div id="chat-box" class="hidden">
@@ -766,18 +633,15 @@
       <div class="chat-online"></div>
       <button class="chat-close" onclick="toggleChat()">✕</button>
     </div>
-
     <div class="chat-messages" id="chat-messages">
       <div class="msg msg-bot">Hi! 👋 Welcome to Samy's Crochet! I can help with products, prices, custom orders, or upcoming markets. What would you like to know? 🧶</div>
     </div>
-
     <div class="chat-suggestions" id="chat-suggestions">
       <button class="suggestion" onclick="sendSuggestion(this)">What do you make?</button>
       <button class="suggestion" onclick="sendSuggestion(this)">Custom order?</button>
       <button class="suggestion" onclick="sendSuggestion(this)">Next market?</button>
       <button class="suggestion" onclick="sendSuggestion(this)">Prices?</button>
     </div>
-
     <div class="chat-input-row">
       <input type="text" id="chat-input" placeholder="Type a message..."
              onkeydown="if(event.key==='Enter') sendChat()" />
@@ -801,7 +665,6 @@
     const form = document.getElementById('contact-form');
     const submitBtn = document.getElementById('submit-btn');
     const successMsg = document.getElementById('success-msg');
-
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
       submitBtn.textContent = 'Sending…';
@@ -825,6 +688,31 @@
         submitBtn.disabled = false;
       }
     });
+
+    // ── Theme toggle ──
+    const root = document.documentElement;
+    const themeBtn = document.getElementById('theme-btn');
+    const themeLabel = document.getElementById('theme-label');
+
+    const saved = localStorage.getItem('samy-crochet-theme') || 'dark';
+    applyTheme(saved);
+
+    function applyTheme(theme) {
+      root.setAttribute('data-theme', theme);
+      if (theme === 'light') {
+        themeBtn.querySelector('.toggle-icon').textContent = '🌙';
+        themeLabel.textContent = 'Dark';
+      } else {
+        themeBtn.querySelector('.toggle-icon').textContent = '☀️';
+        themeLabel.textContent = 'Light';
+      }
+      localStorage.setItem('samy-crochet-theme', theme);
+    }
+
+    function toggleTheme() {
+      const current = root.getAttribute('data-theme');
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    }
 
     // ── Chat widget ──
     function toggleChat() {
@@ -861,12 +749,11 @@
       return div;
     }
 
-    // ── Product data ──
     const products = [
-      { name: "Bumble Bee",  type: "plushie",  price: 18 },
+      { name: "Bumble Bee",   type: "plushie", price: 18 },
       { name: "Mushroom Boi", type: "plushie", price: 16 },
-      { name: "Cozy Bear",   type: "plushie",  price: 20 },
-      { name: "Sushi Cat",   type: "plushie",  price: 22 },
+      { name: "Cozy Bear",    type: "plushie", price: 20 },
+      { name: "Sushi Cat",    type: "plushie", price: 22 },
     ];
 
     const upcomingMarket = {
@@ -875,22 +762,13 @@
       date: "November 29, 2025"
     };
 
-    // ── Simulated AI response ──
     function getResponse(msg) {
       const m = msg.toLowerCase();
-
-      // Greetings
-      if (/^(hi|hello|hey|hiya|howdy|sup)/.test(m)) {
-        return "Hi there! 🌸 So lovely to meet you! I'm Samy's assistant. You can ask me about our products, prices, custom orders, or upcoming markets — what can I help you with?";
-      }
-
-      // What do you make / products
+      if (/^(hi|hello|hey|hiya|howdy|sup)/.test(m)) return "Hi there! 🌸 So lovely to meet you! I'm Samy's assistant. You can ask me about our products, prices, custom orders, or upcoming markets — what can I help you with?";
       if (/what.*(make|sell|have|offer)|products?|items?|shop|catalog/i.test(m)) {
         const list = products.map(p => `• **${p.name}** — $${p.price}`).join('\n');
         return `Here's what Samy makes! 🧶\n\n${list}\n\nEvery piece is handmade — no two are exactly alike! Interested in one?`;
       }
-
-      // Price / how much
       if (/price|cost|how much|\$|cheap|afford|budget/i.test(m)) {
         const nums = msg.match(/\d+/);
         if (nums) {
@@ -905,49 +783,17 @@
         const list = products.map(p => `• **${p.name}** — $${p.price}`).join('\n');
         return `Our current prices:\n\n${list}\n\nAll pieces are one-of-a-kind handmade! 💜`;
       }
-
-      // Specific products
       if (/bee|bumble/i.test(m)) return "The **Bumble Bee** is $18 🐝 — soft, sweet, and totally handmade! Want to order one or ask about a custom color?";
       if (/mushroom/i.test(m)) return "**Mushroom Boi** is $16 🍄 — a fan favorite! Cozy and adorable. Want one?";
       if (/bear/i.test(m)) return "The **Cozy Bear** is $20 🐻 — snuggly and made with the softest yarn. Available in pink & white!";
       if (/sushi|cat/i.test(m)) return "**Sushi Cat** is $22 🍣🐱 — an adorable kitty duo that's almost too cute to give away!";
-
-      // Custom order
-      if (/custom|commission|request|special|personali[sz]/i.test(m)) {
-        return "Absolutely, Samy loves custom orders! 🎀\n\nJust scroll down to the **contact form** and describe what you're looking for — color, size, specific character — and Samy will get back to you!\n\nOr tell me here: what would you like made?";
-      }
-
-      // Market / expo / event / where to find
-      if (/market|expo|event|fair|where|find you|in person|booth/i.test(m)) {
-        return `Next up: **${upcomingMarket.name}** 🏪\n📍 ${upcomingMarket.location}\n📅 ${upcomingMarket.date}\n\nCome say hi — the booth is always cozy! 🧡`;
-      }
-
-      // Shipping / delivery
-      if (/ship|deliver|mail|post|online order/i.test(m)) {
-        return "Right now Samy mainly sells in person at markets! 🏪 For custom or special orders, reach out through the contact form and we can chat about delivery options. 💜";
-      }
-
-      // Materials / yarn
-      if (/yarn|material|made of|fabric|soft|wash/i.test(m)) {
-        return "Everything is made with soft acrylic yarn 🧶 — it's cozy, durable, and comes in so many colors! Most pieces can be spot-cleaned gently.";
-      }
-
-      // Instagram / social
-      if (/instagram|social|follow|tiktok|twitter/i.test(m)) {
-        return "You can reach Samy through the contact form below! 💜 More social links coming soon 🌸";
-      }
-
-      // Thanks
-      if (/thank|thanks|perfect|great|awesome|love it|amazing/i.test(m)) {
-        return "You're so welcome! 🧶 Feel free to ask anything else — happy to help! 💜";
-      }
-
-      // Bye
-      if (/bye|goodbye|see you|cya|ttyl/i.test(m)) {
-        return "Thanks for visiting Samy's Crochet! Hope to see you at a market soon 🌿🧶💜";
-      }
-
-      // Fallback
+      if (/custom|commission|request|special|personali[sz]/i.test(m)) return "Absolutely, Samy loves custom orders! 🎀\n\nJust scroll down to the **contact form** and describe what you're looking for — color, size, specific character — and Samy will get back to you!\n\nOr tell me here: what would you like made?";
+      if (/market|expo|event|fair|where|find you|in person|booth/i.test(m)) return `Next up: **${upcomingMarket.name}** 🏪\n📍 ${upcomingMarket.location}\n📅 ${upcomingMarket.date}\n\nCome say hi — the booth is always cozy! 🧡`;
+      if (/ship|deliver|mail|post|online order/i.test(m)) return "Right now Samy mainly sells in person at markets! 🏪 For custom or special orders, reach out through the contact form and we can chat about delivery options. 💜";
+      if (/yarn|material|made of|fabric|soft|wash/i.test(m)) return "Everything is made with soft acrylic yarn 🧶 — it's cozy, durable, and comes in so many colors! Most pieces can be spot-cleaned gently.";
+      if (/instagram|social|follow|tiktok|twitter/i.test(m)) return "You can reach Samy through the contact form below! 💜 More social links coming soon 🌸";
+      if (/thank|thanks|perfect|great|awesome|love it|amazing/i.test(m)) return "You're so welcome! 🧶 Feel free to ask anything else — happy to help! 💜";
+      if (/bye|goodbye|see you|cya|ttyl/i.test(m)) return "Thanks for visiting Samy's Crochet! Hope to see you at a market soon 🌿🧶💜";
       return "That's a great question! 🌸 For anything I can't answer right here, the **contact form** below is the best way to reach Samy directly. Is there anything else I can help with — products, prices, or upcoming markets?";
     }
 
@@ -955,10 +801,7 @@
       appendMsg(msg, 'user');
       const typing = appendMsg('typing...', 'typing');
       typing.id = 'typing-indicator';
-
-      // Small delay to feel natural
       await new Promise(r => setTimeout(r, 600 + Math.random() * 400));
-
       document.getElementById('typing-indicator')?.remove();
       appendMsg(getResponse(msg), 'bot');
     }
