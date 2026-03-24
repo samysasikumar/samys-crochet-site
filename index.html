@@ -783,10 +783,10 @@
         const list = products.map(p => `• **${p.name}** — $${p.price}`).join('\n');
         return `Our current prices:\n\n${list}\n\nAll pieces are one-of-a-kind handmade! 💜`;
       }
-      if (/bee|bumble/i.test(m)) return "The **Bumble Bee** is $18 🐝 — soft, sweet, and totally handmade! Want to order one or ask about a custom color?";
-      if (/mushroom/i.test(m)) return "**Mushroom Boi** is $16 🍄 — a fan favorite! Cozy and adorable. Want one?";
-      if (/bear/i.test(m)) return "The **Cozy Bear** is $20 🐻 — snuggly and made with the softest yarn. Available in pink & white!";
-      if (/sushi|cat/i.test(m)) return "**Sushi Cat** is $22 🍣🐱 — an adorable kitty duo that's almost too cute to give away!";
+      if (/bee|bumble/i.test(m)) return "The **Bumble Bee** is $20 🐝 — soft, sweet, and totally handmade! Want to order one or ask about a custom color?";
+      if (/mushroom/i.test(m)) return "**Mushroom Boi** is $20 🍄 — a fan favorite! Cozy and adorable. Want one?";
+      if (/bear/i.test(m)) return "The **Cozy Bear** is $25 🐻 — snuggly and made with the softest yarn. Available in pink & white!";
+      if (/sushi|cat/i.test(m)) return "**Sushi Cat** is $20 🍣🐱 — an adorable kitty duo that's almost too cute to give away!";
       if (/custom|commission|request|special|personali[sz]/i.test(m)) return "Absolutely, Samy loves custom orders! 🎀\n\nJust scroll down to the **contact form** and describe what you're looking for — color, size, specific character — and Samy will get back to you!\n\nOr tell me here: what would you like made?";
       if (/market|expo|event|fair|where|find you|in person|booth/i.test(m)) return `Next up: **${upcomingMarket.name}** 🏪\n📍 ${upcomingMarket.location}\n📅 ${upcomingMarket.date}\n\nCome say hi — the booth is always cozy! 🧡`;
       if (/ship|deliver|mail|post|online order/i.test(m)) return "Right now Samy mainly sells in person at markets! 🏪 For custom or special orders, reach out through the contact form and we can chat about delivery options. 💜";
